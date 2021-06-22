@@ -1,27 +1,27 @@
-#README
+# README
 
-##Postman Results for each endpoint
+## Postman Results for each endpoint
 
-###Register
+### Register
 ![Alt text](Images/register.png)
 
-###Login
+### Login
 ![Alt text](Images/login.png)
 
-###Create Log
+### Create Log
 ![Alt text](Images/createLog.png)
 
-###Get All Logs of Users
+### Get All Logs of Users
 ![Alt text](Images/getAllLogs.png)
 
-###Get All logs of A User
+### Get All logs of A User
 ![Alt text](Images/logsOfUser.png)
 
-###Update Logs 
+### Update Logs 
 ![Alt text](Images/updateLogs.png)
 ![Alt text](Images/updateLogsDB.png)
 
 
-###Delete Logs
+### Delete Logs
 ![Alt text](Images/deleteLog.png)
 ![Alt text](Images/deleteLogDB.png)
