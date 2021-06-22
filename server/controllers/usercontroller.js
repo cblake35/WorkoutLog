@@ -1,7 +1,9 @@
 const router = require('express').Router(); //We import the Express framework and access the Router()  method, assigning it to a variable
 const { UserModel } = require('../models'); //We use object deconstructing to import the user model and store it in UserModel variable. It is convention to use Pascal casing (uppercase on both words) for a model class with Sequelize
 const jwt = require('jsonwebtoken'); //requires jsonwebtoken to be used in the usercontroller file
-const bcrypt = require('bcrypt'); //requires bcrypt to encode sensitive information in our server(see bottom)
+const bcrypt = require('bcryptjs'); //requires bcrypt to encode sensitive information in our server(see bottom)
+
+/* REGISTER ROUTE */
 
 router.post('/register', async (req, res) => {
 
@@ -14,7 +16,7 @@ router.post('/register', async (req, res) => {
         });
 
         //sign() is the method we use to create the token
-        //user is the primary key of the user table and is the number assigned to the user when created in the databas
+        //user id the primary key of the user table and is the number assigned to the user when created in the databas
         //second parameter is the signature, third parameter is the duration of when the token will expire. This case 24hrs
         //third parameter is optional
         //process.env.JWT_SECRET refers to the signature of the user that we dont want seen by other users(see .gitignore & env file)
@@ -22,7 +24,7 @@ router.post('/register', async (req, res) => {
         let token = jwt.sign({id: User.id}, process.env.JWT_SECRET, {expiresIn: 60 * 60 * 24});
 
         res.status(202).json({
-            message: 'User succesfuly registered',
+            message: 'User succesfully registered',
             user: User,
             sessionToken: token //Assigns a token to a specific user and the client
         })
@@ -40,6 +42,51 @@ router.post('/register', async (req, res) => {
                 message: "Failed to register user",
             });
         }
+    }
+})
+
+/* LOGIN ROUTE */
+
+router.post("/login", async (req, res) => {
+
+    let { username, passwordhash } = req.body.user;
+
+    try {
+        const loggedInUser = await UserModel.findOne({ //findOne() is a sequelize method
+            where: {
+                username: username,
+            }
+        });
+
+        if (loggedInUser) {
+            //bcrypt.compare() is a bcrypt method
+            //In our first argument, we pull in the password value from the current request when the user is signing up 
+            //(password is the deconstruction of the request for this method. It is equal to req.body.password).
+            let passwordComparison = await bcrypt.compare(passwordhash, loggedInUser.passwordhash); 
+
+            if (passwordComparison) {
+                
+                let token = jwt.sign({ id: loggedInUser.id }, process.env.JWT_SECRET, { expiresIn: 60 * 60 * 24 });
+
+                res.status(201).json({
+                    message: "User succesfully logged in.",
+                    user: loggedInUser,
+                    sessionToken: token,
+                });
+            } else {
+                res.status(401).json({
+                    message: "Login Failed: Incorrect email or password"
+                })
+            }
+        } else {
+            res.status(401).json({
+                message: "Login Failed: Incorrect email or password"
+            });
+        }
+    } catch (err) {
+        res.status(500).json({
+            error: "There's an error logging in"
+        })
     }
 })
 

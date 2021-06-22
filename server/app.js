@@ -2,8 +2,6 @@ require('dotenv').config();
 const Express = require('express'); //allows the use express (node.js framework)
 const app = Express();
 const dbConnection = require('./db') //allows the use of the local database(imports the db.js file)
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 
 const controllers = require('./controllers'); //requires the controllers folder to access the files within it used below
 

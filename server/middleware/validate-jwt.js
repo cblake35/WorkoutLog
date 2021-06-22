@@ -21,7 +21,7 @@ const validateJWT = async (req, res, next) => {
             )
             : undefined;
 
-        console.log('payload -->', payload) //payload is the name tokens use for the
+        console.log('payload -->', payload) //payload is the the data being sent via the token;
 
         // If payload comes back as a truthy value, we use Sequelize's "findOne" method to look for a user in our
         // UserModel where the ID of the user in database matches the ID stored in the token. It then stores the 
