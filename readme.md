@@ -1,1 +1,1 @@
-![Alt text] (https://github.com/cblake35/WorkoutLog/Images/Create.png?raw=true)
+![Alt text] (https://github.com/cblake35/WorkoutLog/Create.png?raw=true)
