@@ -1,13 +1,15 @@
 const router = require('express').Router(); //We import the Express framework and access the Router()  method, assigning it to a variable
+const { UniqueConstraintError } = require("sequelize/lib/errors");
 const { UserModel } = require('../models'); //We use object deconstructing to import the user model and store it in UserModel variable. It is convention to use Pascal casing (uppercase on both words) for a model class with Sequelize
 const jwt = require('jsonwebtoken'); //requires jsonwebtoken to be used in the usercontroller file
 const bcrypt = require('bcryptjs'); //requires bcrypt to encode sensitive information in our server(see bottom)
+
 
 /* REGISTER ROUTE */
 
 router.post('/register', async (req, res) => {
 
-    let { username, passwordhash } = req.body.user;
+    let {username, passwordhash} = req.body.user;
 
     try { //Try...catch statements are a part of JavaScript that allows a section of code to be attempted.
         const User = await UserModel.create({

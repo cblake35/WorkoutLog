@@ -3,6 +3,8 @@ const Express = require('express'); //allows the use express (node.js framework)
 const app = Express();
 const dbConnection = require('./db') //allows the use of the local database(imports the db.js file)
 
+app.use(require('./middleware/headers'))
+
 const controllers = require('./controllers'); //requires the controllers folder to access the files within it used below
 
 // Express has functionality built into it, that allows it to be able to process requests that come into our server. And in order to use the req.body
