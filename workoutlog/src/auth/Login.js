@@ -11,7 +11,7 @@ const Login = (props) => {
             method: 'POST',
             body: JSON.stringify({user:{username: username, passwordhash: password}}),
             headers: new Headers({
-                'Content-Type': 'application/json/',
+                'Content-Type': 'application/json',
             })
         }).then(
             (response) => response.json()
@@ -23,8 +23,8 @@ const Login = (props) => {
     return (
         <div>
             <h1>Login</h1>
-            <Form>
-                <FormGroup onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
+                <FormGroup>
                     <Label htmlFor='username'>Username</Label>
                     <Input name='username' onChange={(e) => setUsername(e.target.value)} value={username} />
                 </FormGroup>
